@@ -1,0 +1,31 @@
+type _Transfer @entity {
+  id: ID! #Trancfer Symbol
+  count: BigInt! #Amount
+  _from: Bytes! # Address from
+  _to: Bytes! # Address to
+  _value: BigInt! #Transaction Token
+}
+
+
+type Token @entity {
+    id: ID! #Token Symbol
+    symbol: String! #Token Symbol
+    name: String  #Token Name
+    transfersCount: BigInt! #Number of transfers
+    holdersCount: BigInt! #Number of holders
+    users: [TokenUser!]! @derivedFrom(field: "token")
+    supply: Supply! @derivedFrom(field: "token")
+    transactions: [Transaction]! @derivedFrom(field: "token")
+}
+
+type Transaction @entity {
+    id: ID! #Transaction Hash
+    block: BigInt! #Transaction Block
+    timestamp: BigInt! #Transaction Timestamp
+    transactionType: TransactionType! #Type - Mint, Burn, Transfer
+    fromAddr: User! #From User
+    toAddr: User! #To User
+    token: Token! #Transaction Token
+    amount: BigInt! #Transaction Token Amount
+}
+
